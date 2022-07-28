@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define rep(i, n) for(int i = 1;i <= n; i ++ )
+#define int long long
+#define pb push_back
+#define No cout << "No" << endl;
+#define Yes cout << "Yes" << endl;
+#define fi first
+#define se second
+#define all(x) (x).begin(),(x).end()
+typedef pair<int,int> pii;
+const int N = 1e5 + 10;
+const int INF = 0x3f3f3f3f;
+
+struct work {
+    int t;
+    int w;
+};
+
+bool cmp(work a, work b) {
+    return a.t < b.t;
+}
+
+void solve() {
+    int n; cin >> n;
+
+    vector<work> a;
+    for(int i = 1; i <= n; i ++ ) {
+        work tmp;
+        cin >> tmp.t >> tmp.w;
+        a.push_back(tmp);
+    }
+
+    sort(a.begin(), a.end(), cmp);
+
+    priority_queue<int, vector<int>, greater<int>> q;
+    int T = 0;
+    for(int i = 0; i < n; i ++ ) {
+        if(T < a[i].t) {
+            q.push(a[i].w);
+            T++;
+        }
+        else {
+            if(a[i].w > q.top()) {
+                q.pop();
+                q.push(a[i].w);
+            }
+        }
+    }
+
+    int res = 0;
+    while(!q.empty()) {
+        // cout << q.top() << " ";
+        res += q.top();
+        q.pop();    
+    }
+    cout << res << endl;
+}
+
+signed main()
+{
+        solve();
+    return 0;
+}
