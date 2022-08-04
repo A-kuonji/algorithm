@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define rep(i, n) for(int i = 1;i <= n; i ++ )
+#define int long long
+#define pb push_back
+#define No cout << "No" << endl;
+#define Yes cout << "Yes" << endl;
+#define fi first
+#define se second
+#define all(x) (x).begin(),(x).end()
+typedef pair<int,int> pii;
+const int N = 2e5 + 10;
+const int INF = 0x3f3f3f3f;
+int a[N];
+
+int solve(int l, int r) {
+    if(l == r) return a[l];
+    
+    int mid = l + r >> 1;
+    int mal = solve(l, mid), mar = solve(mid + 1, r);
+    int maxl = 0, maxr = 0;
+    int x = -INF, y = -INF;
+    for(int i = mid; i >= l; i -- ) {
+        maxl += a[i];
+        x = max(x, maxl);
+    }
+    for(int i = mid + 1; i <= r; i ++ ) {
+        maxr += a[i];
+        y = max(y, maxr);
+    }
+
+    return max(x + y, max(mal, mar));
+}
+
+signed main() {
+    int n, s; cin >> n;
+
+    for(int i = 1; i <= n; i ++ ) cin >> a[i];
+
+    cout << solve(1, n);
+
+    return 0;
+}
